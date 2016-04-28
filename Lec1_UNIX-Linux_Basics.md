@@ -249,4 +249,20 @@ In a non-command line **desktop** environment:
 - Copy with `Ctrl+c`
 - Paste with `Ctrl+v`
 
-Command line <->
+Command line <-> **desktop** exchange:
+- Copy text out of the **command line** and into the **desktop** with `Shift+Ctrl+c` or `Apple+c`
+- Paste text from the **desktop** into the **command line** with `Shift+Ctrl+v` or `Apple+v`
+
+Note: These shortcuts are the defaults but can be changed and customized to the user's preferences.
+
+***
+
+<!-- background: #000100 -->
+<!-- color: #F1F1F2-->
+<!-- font: metronova -->
+
+# Handy Shortcuts
+
+#### Anywhere in Command Line:
+
+The :arrow_up: and :arrow_down: arrows scroll through command history 
