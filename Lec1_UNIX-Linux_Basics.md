@@ -265,4 +265,247 @@ Note: These shortcuts are the defaults but can be changed and customized to the 
 
 #### Anywhere in Command Line:
 
-The :arrow_up: and :arrow_down: arrows scroll through command history 
+The :arrow_up: and :arrow_down: arrows scroll through command history.
+
+Typing `history` will show all the commands you have used recently.
+
+#### Auto Completion:
+
+Typing the beginning of something followed by `TAB` will complete the program_path/file_name.
+
+`<something-incomplete> TAB` 
+
+#### Taking control over the cursor (the pointer on the command line):
+
+- :star: `Ctrl+a` takes cursor to the beginning of the command line
+- :star: `Ctrl+e` takes cursor to the end of the command line
+- `Ctrl+w` cuts the last word
+- `Ctrl+k` cuts to the end of the line
+- `Ctrl+y` paste content that was cut earlier (by `Ctrl+w` or `Ctrl+k`)
+
+#### When specifying file names:
+
+- `.` (dot) refers to the present working directory
+- `~` (Tilda) or `~/` refers to the user's home directory 
+
+***
+
+<!-- background: #000100 -->
+<!-- color: #F1F1F2-->
+<!-- font: metronova -->
+
+# Finding Files in Directories and Applications
+
+#### Here are some important commands to know:
+
+```
+find -name "*pattern*"              # searches for *pattern* in and below current directory
+find /usr/local -name "*blast*"     # finds file names *blast* in specified directory
+find /usr/local -iname "*blast*"    # Same as above, but case insensitive
+```
+
+#### Here are some additional useful arguments that would be good to know exist:
+
+- `-user <user name>`
+- `-group <group name>`
+- `-ctime <number of days ago changed>`
+
+```
+find ~ -type f -mtime -2        # finds all files you have modified in the last two days
+locate <pattern>                # finds files and directories that are written into update file
+which <application_name>        # location of application
+whereis <application_name>      # searches for executeables in set of directories
+dpkg -l | grep mypattern        # find Debian packages and refine search with grep pattern
+```
+
+#### Example of a `find` command we will be using frequently later on today
+
+```
+find `pwd` -name "filename" | sort
+```
+
+***
+
+<!-- background: #000100 -->
+<!-- color: #F1F1F2-->
+<!-- font: metronova -->
+
+# Finding Things in Files
+
+#### Grep
+
+:star: `grep` searches **within files** whereas `find` searches **directories**
+
+```
+grep pattern file           # provides lines in 'file' where pattern 'appears'
+                            # if pattern is shell function use single quotes: '>'
+                            
+grep -H pattern             # -H prints out file name in front of pattern
+
+grep 'pattern' file | wc    # pipes lines with pattern into word count 'wc'
+                            # wc arguments: 
+                            #   -c: show only bytes 
+                            #   -w: show only words
+                            #   -l: show only lines
+                            # help on regular expressions: 
+                            #   $ man 7 regex
+                            #   man perlre    
+```
+
+***
+
+<!-- background: #000100 -->
+<!-- color: #F1F1F2-->
+<!-- font: metronova -->
+
+# Permissions and Ownership
+
+#### List directories and files
+
+```
+ls -al  # shows something like this for each file/dir:
+        #   drwxrwxrwx
+        # d: directory
+        # rwx: read, write, execute
+        # first triplet: user permissions (u)
+        # second triplet: group permissions (g)
+        # third triplet: world permissions (o)        
+```
+
+#### Assign write and execute permissions to user and group
+
+```
+chmod ug+rx my_file
+```
+
+#### To remove all permissions from all three user groups
+
+```
+chmod ugo-rwx my_file      # '+' adds permissions
+                           # '-' removes permissions
+                           # '=' causes them to be the only permissions the file has
+```
+
+#### Change ownership
+
+```
+chown <user> <file or dir>          # change user ownership
+chgrp <group> <file or dir>         # changes group ownership
+chown <user>:<group> <file or dir>  # changes user & group ownership
+```
+
+***
+
+<!-- background: #063852 -->
+<!-- color: #F1F1F2-->
+<!-- font: metronova -->
+
+# Exercise 1.2: Useful Unix Commands
+
+#### Commands that will be used in the exercise:
+
+```
+wget ftp://ftp.ncbi.nih...      # download file from web
+
+du -sh              # displays disk space usage of current directory
+du -sh *            # displays disk space usage of individual files/directories
+du -s * | sort -nr  # shows disk space used by different files/directories sorted by size
+```
+
+#### Exercise 1.2
+
+You should already be in the directory `GitHub` we created earlier. If not, use `cd` to go into the directory.
+
+```
+cd ~/GitHub
+```
+
+To download files to the `GitHub` directory, you must have the url of the raw format of the file. Use the command `wget` to download the files. 
+
+You can download files by copying and pasting one url at a time
+
+```
+wget https://raw.githubusercontent.com/vsbuffalo/bds-files/master/chapter-07-unix-data-tools/contam.fastq
+```
+
+Let's download another file from a different url
+
+```
+wget https://raw.githubusercontent.com/vsbuffalo/bds-files/master/chapter-07-unix-data-tools/contaminated.fastq
+
+```
+
+Now we'll download multiple files from different links with `wget`.
+
+Each link must be separated by a space
+
+```
+wget https://raw.githubusercontent.com/vsbuffalo/bds-files/master/chapter-03-remedial-unix/tb1-protein.fasta https://raw.githubusercontent.com/vsbuffalo/bds-files/master/chapter-03-remedial-unix/tb1.fasta https://raw.githubusercontent.com/vsbuffalo/bds-files/master/chapter-03-remedial-unix/tga1-protein.fasta
+```
+
+To view file sizes, permissions, date, etc. line by line, use the `ls` command. `-l` means use long listing format and `-h` will print sizes of files in human readable format
+
+```
+ls -lh
+```
+
+***
+
+<!-- background: #000100 -->
+<!-- color: #F1F1F2-->
+<!-- font: metronova -->
+
+# STDIN, STDOUT, and STDERR
+
+By default, UNIX commands read from **standard input (STDIN)** and send their output to **standard out (STDOUT)**.
+
+#### Example: STDIN and STDOUT
+
+This will take the input of a program and output it to be written to a file:
+
+```
+ls -l               # lists (outputs) files in long listing format
+
+ls -l > ls-l.txt    # takes output from above and inputs it to a file called 'ls-l.txt'
+```
+
+Note: When creating new files, it is easiest to avoid having spaces between names. Use `_` or `-` as spaces instead.
+
+#### Example: STDERR
+
+STDERR are error messages that output to the screen.
+
+This will output an error message to the screen:
+
+```
+grep da * 2
+```
+
+For more examples, see [LINUX HOWTOs](http://www.tldp.org/HOWTO/Bash-Prog-Intro-HOWTO-3.html)
+
+***
+
+<!-- background: #000100 -->
+<!-- color: #F1F1F2-->
+<!-- font: metronova -->
+
+# Redirections
+
+Before we jump into redirections, I would like to review **wildcards**. 
+- Wildcards are denoted by `*` and it is used to specify many files (I'll discuss more details about this later and show an example). 
+- A few examples of formats are: 
+    - `<beginning-of-filename>*`
+    - `*<end-of-filename>`
+    - `*<middle-of-filename>*`
+
+Now, we'll go back to redirections.
+
+The following commands are redirections:
+
+```
+ls > file               # stores ls output into specified file
+command < my_file       # uses file after '<' as STDIN
+command >> my_file      # appends output of one command to file (will not overwrite file with same filename)
+```
+
+
