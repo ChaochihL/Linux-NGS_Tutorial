@@ -185,7 +185,7 @@ du -sh ~/*  # calculate the file sizes in your home directory
 
 ***
 
-<!-- background: #000100 -->
+<!-- background: #063852 -->
 <!-- color: #F1F1F2-->
 <!-- font: metronova -->
 
@@ -504,6 +504,393 @@ The following commands are redirections:
 ls > file               # stores ls output into specified file
 command < my_file       # uses file after '<' as STDIN
 command >> my_file      # appends output of one command to file (will not overwrite file with same filename)
+command | tee my_file   # writes STDOUT to file and print to screen
+command > my_file; cat my_file  # writes STDOUT to file, 
+                                # then prints it to screen
+                                # semi-colon designates end of command
+grep my_pattern my_file | wc    # Pipes (|) output of 'grep' to 'wc'
 ```
+
+***
+
+<!-- background: #000100 -->
+<!-- color: #F1F1F2-->
+<!-- font: metronova -->
+
+# Piping
+
+Piping is another form of redirects.
+
+It is a way to chain commands together
+- Can take the STDOUT of one command and send it to STDIN of another
+- Denoted by `|` symbol 
+
+Example:
+
+```
+find `pwd` -name "name_of_file" | sort
+```
+
+***
+
+<!-- background: #000100 -->
+<!-- color: #F1F1F2-->
+<!-- font: metronova -->
+
+# Globbing
+
+Globbing is denoted by `*` and is a wildcard.
+
+It finds all that matches the surrounding text.
+
+Example:
+
+```
+*.fastq         # matches all files that end with .fastq
+
+WBDC_*          # matches all files taht start with WBDC_
+
+*_2015_08-05*   # matches all files that have the following date in the file name
+```
+
+***
+
+<!-- background: #063852 -->
+<!-- color: #F1F1F2-->
+<!-- font: metronova -->
+
+# Exercise 1.3: Using `find`, `chmod`, and `grep` commands
+
+Make sure you are in the directory `~/GitHub` (this path may be different depending on where you created your `GitHub` directory earlier on).
+
+```
+#   Use 'find' command to locate all .fasta files
+#   'pwd' means point working directory
+#   'sort' sorts text line by line in alphabetical order
+find `pwd` -name "*.fasta" | sort
+```
+
+Check how many files are listed:
+
+```
+#   Use 'wc' command
+#   '-l' option searches line by line
+#   Use the up arrow to scroll through your history 
+#   so you don't have to re-type the entire command
+find `pwd` -name "*.fasta" | sort | wc -l
+```
+
+There should be 3 files with .fasta in their name.
+
+***
+
+<!-- background: #063852 -->
+<!-- color: #F1F1F2-->
+<!-- font: metronova -->
+
+# Exercise 1.3: Using `find`, `chmod`, and `grep` commands
+
+Again, make sure you are in the `~/GitHub` directory.
+
+```
+#   Use the 'find' command to locate all .fasta and .fastq files
+find `pwd` -name "*.fast*" | sort
+```
+
+Check how many files were found:
+
+```
+#   Use the 'wc' command to see how many files were found
+find `pwd` -name "*.fast*" | sort | wc -l
+```
+There should be 5 files with either `.fasta` or `.fastq` in their filenames.
+
+***
+
+<!-- background: #063852 -->
+<!-- color: #F1F1F2-->
+<!-- font: metronova -->
+
+# Exercise 1.3: Using `find`, `chmod`, and `grep` commands
+
+View permissions of the files downloaded:
+
+```
+#   Use the 'ls' command to do this
+ls -l
+```
+
+Now we will change the permissions for the file `contam.fastq`. Let's assign read (r) and write (w) permissions for the user (u) and group (g). 
+
+```
+chmod ug+rw contam.fastq
+```
+
+You will rarely want to assign permissions to world (o) but this depends on your specific project. World permissions give anyone either read(r), write (w), and/or execute (x) permissions to your files
+
+```
+#   Use 'ls' command again to view changes in permissions
+ls -l
+```
+
+***
+
+<!-- background: #063852 -->
+<!-- color: #F1F1F2-->
+<!-- font: metronova -->
+
+# Exercise 1.3: Using `find`, `chmod`, and `grep` commands
+
+We will now practice using the `grep` command.
+
+```
+#   Download the file we are using to ~/GitHub
+wget https://raw.githubusercontent.com/vsbuffalo/bds-files/master/chapter-07-unix-data-tools/lengths.txt
+```
+
+View the beginning of the file called `lengths.txt`:
+
+```
+#   Use the 'head' command for this
+head lengths.txt
+```
+
+Now, pull all `chr1` lengths from the file:
+
+```
+#   Use the 'grep' command
+#   Specify what you are grepping for (i.e. chr1)
+#   Specify file (i.e. lengths.txt) you are pulling from
+grep chr1 lengths.txt
+```
+
+```
+#   Now redirect and create a new file called 'chr1_lenghts.txt'
+grep chr1 lengths.txt > chr1_lengths.txt
+
+#   Use 'head' command to check file contents
+head chr1_lengths.txt
+```
+
+***
+
+<!-- background: #000100 -->
+<!-- color: #F1F1F2-->
+<!-- font: metronova -->
+
+# Process Management
+
+There are quite a few process management commands, one of the more useful ones is `Ctrl+c` to kill the process that is currently running in the foreground.
+
+Here are a few more:
+
+```
+top     # view top consumers of memory and CPU
+who     # Shows who is logged into the system
+ps      # Shows processes running by user
+
+ps aux | grep <user_name>   # Shows all processes of one user
+ps ax --tree                # Shows the child-parent hierarchy of all processes
+ps -o %t -p <pid>           # Shows how long a particular process was running
+
+kill <process-ID>           # Kills a specific process
+kill -9 <process-ID>        # NOTICE: "kill -9" is a very violent approach
+                            # It does not give the process any time to perform cleanup procedures
+                            
+renice -n <priority_value>  # Changes the priority value, which ranges from 1-19,
+                            # The higher the value, the lower the priority, default is 10
+```
+
+***
+
+<!-- background: #000100 -->
+<!-- color: #F1F1F2-->
+<!-- font: metronova -->
+
+# Non-Graphical Text Editors
+
+These are typically used on the command line to make small edits to scripts. Below are some of the non-graphical text editors that can be used:
+
+Vi and Vim
+- Non-graphical (terminal-based) editor
+- Vi is guaranteed to be available on any system
+- Vim is the improved version of vi
+
+Pico
+- Simple terminal-based editor available on most version of Unix
+- Uses keystroke commands but they are listed in logical fashion at bottom of screen
+
+Nano
+- A simple terminal-based editor which is default on modern Debian systems
+
+Emacs
+- Non-graphical or window-based editor
+- You still need to know keystroke commands to use it
+- Installed on all Linux distributions and on most other Unix systems
+
+Xemacs
+- More sophisticated version of emacs, but usually not installed by default
+- All common commands are available from menus
+- Very powerful editor with:
+- Built-in syntax checking
+- Web-browsing
+- News-reading
+- Manual-page browsing
+- And more…
+
+***
+
+<!-- background: #000100 -->
+<!-- color: #F1F1F2-->
+<!-- font: metronova -->
+
+# Graphical Text Editors
+
+These are often used when writing large chunks of code and can be used on a GUI (Graphical User Interface). Below are a few options for graphical text editors:
+
+Sublime2
+- Graphical editor
+- Customizable
+- Cross Platform 
+- OS X, Windows, Linux
+- Free unlimited trial period
+- Can also purchase license
+
+Visual Studio Code
+- Graphical editor
+- Cross Platform 
+- OS X, Windows, Linux
+- Free
+
+Text Wrangler
+- Graphical editor
+- Macs only
+- Free
+- Many more…
+
+***
+
+<!-- background: #000100 -->
+<!-- color: #F1F1F2-->
+<!-- font: metronova -->
+
+# Vim Manual
+
+For this tutorial, we will focus on learning Vim. Vim has a larger learning curve but is a very powerful tool. 
+
+Basics:
+
+```
+vim my_file_name    # open/create file with vim
+```
+
+Once you are in Vim, here are some of the most important commands:
+
+```
+i       # insert mode - allows you to edit text
+ESC     # the escape key allows you to exit insert mode
+:       # the colon key starts command mode at the bottom of the screen
+```
+
+***
+
+<!-- background: #000100 -->
+<!-- color: #F1F1F2-->
+<!-- font: metronova -->
+
+# Modifier Keys to Control Vim
+
+Here are additional keys you should become familiar with in Vim:
+
+```
+:w      # save command (if you are in editing mode you have to hit ESC first!)
+:q      # quit file, don't save
+:q!     # exits WITHOUT saving any changes you have made
+:wq     # save and quit
+R       # replace mode
+r       # replace only one character under cursor
+q:      # history of commands (from NORMAL MODE!)
+        # to re-execute one of the commands, select and hit enter
+:w new_filename     # saves into new file
+:#      # colon followed by a line number, jumps to specified line
+```
+
+***
+
+<!-- background: #000100 -->
+<!-- color: #F1F1F2-->
+<!-- font: metronova -->
+
+# Additional Vim Commands
+
+Below are additional Vim commands that will make your life a lot easier if you keep them somewhere you can reference. It is not necessary to memorize these.
+
+```
+:s/txt1/txt2    # replace 'txt1' with 'txt2' on the current line
+:%s/txt1/txt2   # replace 'txt1' with 'txt2' in the whole file
+u               # undo last change
+<CTRL>+r        # redo last undo
+dd              # delete current line the cursor is on
+$               # jump to the end of current line
+^               # jump to the beginning of current line
+/txt            # find all instances of 'txt' in file
+<shift>+g       # jump to the bottom of the page
+gg              # jump to the top of the page
+```
+
+***
+
+<!-- background: #000100 -->
+<!-- color: #F1F1F2-->
+<!-- font: metronova -->
+
+# Vim Help
+
+#### Online help:
+
+For help on the web, Google will find answers to most questions on **vi** and **vim**. There is also an [Animated Vim Tutorial](http://www.linuxconfig.org/Vim_Tutorial). There are also plenty of Vim commands cheat sheets available online. 
+
+#### Help from Command Line
+
+```
+vimtutor    # open vim tutorial from shell
+```
+
+#### Help in Vim
+
+```
+:help           # opens help within vim, hit :q to get back to your file
+:help <topic>   # opens help on specified topic
+:<up-down keys> # like in shell, you get recent commands
+```
+
+***
+
+<!-- background: #000100 -->
+<!-- color: #F1F1F2-->
+<!-- font: metronova -->
+
+# More Vim
+
+- Moving around in files
+- Line Wrapping and line numbers
+- Spell checking & dictionary
+- Enabling syntax highlighting
+- Deleting things
+- Search in files
+- Replacements with regular expression support
+- Printing and inserting files
+- Convert text file to HTML format
+- Shell commands in vim
+- Use Vim as Table Editor
+
+To learn more about vim, reference the [Thomas Girke tutorial](http://manuals.bioinformatics.ucr.edu/home/linux-basics).
+
+***
+
+<!-- background: #000100 -->
+<!-- color: #F1F1F2-->
+<!-- font: metronova -->
+
 
 
