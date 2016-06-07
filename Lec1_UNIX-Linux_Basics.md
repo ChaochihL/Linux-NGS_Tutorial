@@ -555,6 +555,7 @@ WBDC_*          # matches all files taht start with WBDC_
 
 ***
 
+<!-- Exercises color scheme -->
 <!-- background: #063852 -->
 <!-- color: #F1F1F2-->
 <!-- font: metronova -->
@@ -584,6 +585,7 @@ There should be 3 files with .fasta in their name.
 
 ***
 
+<!-- Exercises color scheme -->
 <!-- background: #063852 -->
 <!-- color: #F1F1F2-->
 <!-- font: metronova -->
@@ -607,6 +609,7 @@ There should be 5 files with either `.fasta` or `.fastq` in their filenames.
 
 ***
 
+<!-- Exercises color scheme -->
 <!-- background: #063852 -->
 <!-- color: #F1F1F2-->
 <!-- font: metronova -->
@@ -635,6 +638,7 @@ ls -l
 
 ***
 
+<!-- Exercises color scheme -->
 <!-- background: #063852 -->
 <!-- color: #F1F1F2-->
 <!-- font: metronova -->
@@ -892,5 +896,462 @@ To learn more about vim, reference the [Thomas Girke tutorial](http://manuals.bi
 <!-- color: #F1F1F2-->
 <!-- font: metronova -->
 
+# Useful Shell Commands
 
+Below are some useful commands to know exist.
+
+```
+cat <file1> <file2> <cat.out>       # concatenate files into output file 'cat.out'
+```
+
+```
+cmp <file1> <file2>         # tells whether two files are identical
+diff <file1> <file2>        # finds differences between two files
+diff -y <file1> <file2>     # shows differences between two files side by side
+```
+
+```
+head -<number> <file>       # prints first n lines of a file
+```
+
+```
+sort <file>                 # sorts single file, many files and can merge (-m) them,
+                            # -b ignores leading white space
+```
+
+```
+grep                        # searches within a given input file and
+                            # selects lines that match one or more patterns
+```
+
+*** 
+
+<!-- Exercises color scheme -->
+<!-- background: #063852 -->
+<!-- color: #F1F1F2-->
+<!-- font: metronova -->
+
+# Exercise 1.4: Text Viewing
+
+Now we will use `less` to view entire `contam.fastq` file. The `less` command will show you the entire file and you can scroll up and down through the file with your mouse or arrow keys. To quit out of `less` hit `q` on the keyboard. 
+
+```
+less contam.fastq
+```
+
+Next, we will use `more` to view entire `contam.fastq` file . The `more` command allows you to scroll through the file in one direction using the space bar. To quit out of `more` hit `q` on the keyboard.
+
+```
+more contam.fastq
+```
+
+Try using `cat` to concatenate file and print `contam.fastq` file content to standard output
+
+```
+cat contam.fastq
+```
+
+Use `head` to view beginning of `contam.fastq` file
+
+```
+head contam.fastq
+```
+
+Use `tail` to view end of `contam.fastq` file
+
+```
+tail contam.fastq
+```
+
+***
+
+<!-- background: #000100 -->
+<!-- color: #F1F1F2-->
+<!-- font: metronova -->
+
+# Other Important Commands
+
+Below are some keyboard shortcuts that will make it faster to navigate the command line:
+
+```
+Alt+left arrow      # jump one word back
+Alt+right arrow     # jump one word forward
+Ctrl+a              # jump to the beginning of the line
+Ctrl+e              # jump to the end of the line
+Ctrl+c              # terminate current running programs
+exit or Ctrl+d      # exit out of your shell
+```
+
+***
+
+<!-- background: #000100 -->
+<!-- color: #F1F1F2-->
+<!-- font: metronova -->
+
+# Loops
+
+A way of executing a command or a series of commands on multiple cases multiple times.
+
+Saves time
+- Iterations over a range of data
+- Running a command endlessly to monitor the status of a job
+- Performing an operation on hundreds of files
+
+Reduce chance of human error
+- Let the computer take care of all steps
+
+Fast
+- Takes considerably less time than running commands manually
+
+***
+
+<!-- background: #000100 -->
+<!-- color: #F1F1F2-->
+<!-- font: metronova -->
+
+# Examples on for-loops from Thomas Girke
+
+Renames many files `*.old` to `*.new`. To test things first, replace `do mv` with `do echo mv`.
+
+```
+for i in *.input; do mv $i ${i/\.old/\.new}; done
+for i in *\ *; do mv "$i" "${i// /_}"; done         # Replaces spaces in files by underscores
+```
+
+Run an application in loops on many input files.
+
+```
+for i in *.input; do ./application $i; done
+```
+
+Run `fastacmd` from BLAST program in loops on many *.input files and create corresponding *.out files.
+
+```
+for i in *.input; do fastacmd -d /data/../database_name -i $i > $i.out; done
+```
+
+Run SAM's target99 on many input files.
+
+```
+for i in *.pep; do target99 -db /usr/../database_name -seed $i -out $i; done
+```
+
+Search in many files for a pattern and print occurrences together with file names.
+
+```
+for j in 0 1 2 3 4 5 6 7 8 9; do grep -iH <my_pattern> *$j.seq; done
+```
+
+Example of how to run an interactive application (tmpred) that asks for file name input/output.
+
+```
+for i in *.pep; do echo -e "$i\n\n17\n33\n\n\n" | ./tmpred $i > $i.out; done
+```
+
+***
+
+<!-- Exercises color scheme -->
+<!-- background: #063852 -->
+<!-- color: #F1F1F2-->
+<!-- font: metronova -->
+
+# Exercise 1.5: For-loops
+
+A class of loop structures.
+
+Used for iterations through data/files to perform the same operation multiple times on a set.
+
+```
+#   Here is an example of a for-loop written by Paul Hoffman, another member of the Morrell Lab
+#   This for-loop renames all FASTQ files in a directory with the extension ".fq"
+#   It creates a variable that is just the name of the file without the extension (basename)
+#   And uses that as the base for the rename procedure
+#   This happens for each FASTQ file iteratively
+for file in `ls *.fastq`
+do
+    f=`basename $file .fastq`
+    mv $file $f.fq
+done
+```
+
+Check the directory contents with `ls` and you should see all the files that originally had `.fastq` in the filename change to `.fq`.
+
+***
+
+<!-- Exercises color scheme -->
+<!-- background: #063852 -->
+<!-- color: #F1F1F2-->
+<!-- font: metronova -->
+
+# Exercise 1.6: While-loops
+
+Another class of loop structures.
+
+Used for:
+- Conditional (i.e. yes/no, true/false statements) looping
+- Running a command given something that is either true or false
+
+```
+#   Here is an example of a while-loop written by Paul Hoffman, another member of the Morrell Lab
+#   This loop adds one to a number until the nubmer is 10 or greater
+#   We start by defining a variable as the number 1
+#   and as long as the variable is less than 10, we add one to the variable
+num=1
+
+while [ $num -lt 10 ]
+do
+    num=$[ $num + 1 ]
+    echo $num
+done
+```
+
+***
+
+<!-- Exercises color scheme -->
+<!-- background: #063852 -->
+<!-- color: #F1F1F2-->
+<!-- font: metronova -->
+
+# Exercise 1.7: If/then Statements
+
+Different lines of code can be executed depending on whether or not something tests true or not.
+
+```
+#   Here is an example of an if/then statement written by Paul Hoffman, another member of the Morrell Lab
+#   The condition is whether or not SAMTools is installed
+#   If SAMTools is installed, 'THEN' indexes the fasta file
+#   'ELSE' tells us that SAMTools is not installed
+if `command -v samtools > /dev/null 2> /dev/null`
+then
+    echo "SAMTools is installed"
+    samtools faidx reference.fasta
+else
+    echo "SAMTools is not installed"
+fi
+```
+
+***
+
+<!-- background: #000100 -->
+<!-- color: #F1F1F2-->
+<!-- font: metronova -->
+
+# Secure Copy Between Machines
+
+General Syntax:
+
+```
+scp source target       # Use form 'userid@machine_name' if your local and remote user ids are different
+                        # If they are the same, you can use only 'machine_name'
+```
+
+Examples:
+
+```
+scp user@remote_host:file.name  # Copies file from server to local machine (type from local
+                                # machine prompt). The '.' copies to pwd, you can specify
+                                # here any directory, use wildcards (*) to copy many files.
+
+scp file.name user@remote_host:~/dir/newfile.name   # Copies file from local machine to server
+
+scp -r user@remote_host:directory/ ~/dir    # Copies entire directory from server to local machine
+```
+
+***
+
+<!-- background: #000100 -->
+<!-- color: #F1F1F2-->
+<!-- font: metronova -->
+
+# Archives
+
+Single package containing multiple files within themselves.
+
+They make distributing packs of files easy
+- For example, distributing software
+
+There are many kinds that are often called packages
+- Most common is tarball
+
+***
+
+<!-- background: #000100 -->
+<!-- color: #F1F1F2-->
+<!-- font: metronova -->
+
+# Tarballs
+
+A form of archives
+- Created by tar utility
+
+Easy to create and nearly universal
+
+Standard file format: .tar
+
+Compressed file formats:
+- Gzip: .tgz
+- Bzip2: .tbz
+
+***
+
+<!-- background: #000100 -->
+<!-- color: #F1F1F2-->
+<!-- font: metronova -->
+
+# Compressed Files
+
+Compressed files:
+- Take up less space
+- Are unviewable while compressed
+- Different commands are used to decompress/compress different compression formats
+- 3 different compression utilities used: `gzip`, `zip` and `bzip2`
+
+Common Compression Formats
+
+| gzip      | zip      | bzip      |
+| --------  | -------- | --------  |
+| .gz       | .zip     | .bz2      |
+| .tgz      | .tar.zip | .tar.bz2  |
+| .tar.gz   |          | .tbz      |
+|           |          | .tbz2     |
+
+***
+
+<!-- background: #000100 -->
+<!-- color: #F1F1F2-->
+<!-- font: metronova -->
+
+# How to Decompress Files
+
+Decompress gzipped files:
+- Use `gzip -d` to decompress gzipped files
+- Use `tar -xvzf` to decompress gzipped tarball
+
+Decompress bzip2 files:
+- Use `bzip2 -d` to decompress bzip2 files
+- Use `tar -xvjf` to decompress bzipped tarball
+
+Decompress zipped files:
+- Use `unzip` to decompress zipped files
+- Use `unzip` then `tar -xvf` to decompress a zipped tarball
+
+***
+
+<!-- background: #000100 -->
+<!-- color: #F1F1F2-->
+<!-- font: metronova -->
+
+# Command Substitutions
+
+The process of using the output of one command as the argument for another.
+
+Example:
+
+```
+find `pwd` -name "*.sam"
+```
+
+- `pwd` command outputs full path to the current working directory (**p**ath to **w**orking **d**irectory)
+- `find` command looks through `pwd` for filename(s) specified with double quotes
+
+***
+
+<!-- background: #000100 -->
+<!-- color: #F1F1F2-->
+<!-- font: metronova -->
+
+# PATH
+
+List of directories that the shell will search when you type a command.
+
+Where software is installed.
+
+```
+echo $PATH      # view the PATH variable
+
+export PATH=$PATH:<path to directory>   # You can edit PATH variable
+                                        # Edit is not permanent
+                                        # unless you put it in 
+                                        # your .bash_profile
+```
+
+<!-- Exercises color scheme -->
+<!-- background: #063852 -->
+<!-- color: #F1F1F2-->
+<!-- font: metronova -->
+
+# Exercise 1.8: Practicing Unix/Linux Commands
+
+```
+#   In the directory ~/GitHub
+#   Use 'find' command to locate all '.fasta' and '.fq' filenames
+find `pwd` -name "*.f*" | sort
+```
+
+There should be 3 files with either `.fasta` or `.fq` filenames. Check by piping `find` command to a word count command.
+
+```
+#   'wc' prints word, newline and byte counts
+#   The '-l' option means print the newline counts
+find `pwd` -name "*.f*" | sort | wc -l
+```
+
+Now use `ls` command to view the files you downloaded to the directory you are in. You should see a total of 3 files with .fasta in the filename
+
+```
+ls
+```
+
+Now let's move all of these files to a project directory. First we will go to our home directory with:
+
+```
+cd
+```
+
+Then we will make a new directory called Itasca
+
+```
+mkdir Itasca
+```
+
+***
+
+<!-- Exercises color scheme -->
+<!-- background: #063852 -->
+<!-- color: #F1F1F2-->
+<!-- font: metronova -->
+
+# Exercise 1.8: Practicing Unix/Linux Commands
+
+Use `ls` to check your directory is there. Now go into the directory.
+
+```
+cd Itasca
+```
+
+Use `ls` again if you want to check the files in the directory (There should be none so far). Now we will move the `.fasta` and `.fq` files to ~/Itasca. First we will go into the directory our files are located in.
+
+```
+cd ~/GitHub
+```
+
+Then we will use globbing to move all the files at once instead of one at a time. We will use the `mv` command followed by the files we want to move. Then we will specify the directory we want to move the files into.
+
+```
+mv *.f* ~/Itasca
+```
+
+Now, `cd` into ~/Itasca and use `ls` to check that the files were moved to that directory.
+
+***
+
+<!-- background: #000100 -->
+<!-- color: #F1F1F2-->
+<!-- font: metronova -->
+
+# Resources
+
+[Thomas Girke's Linux tutorial](http://manuals.bioinformatics.ucr.edu/home/linux-basics)
+
+The answer key to today's exercises can be viewed and downloaded from [my Gist repository](https://gist.github.com/liux1299/af6fffc5d96e8d44dc9b).
 
