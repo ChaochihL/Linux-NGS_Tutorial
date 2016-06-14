@@ -341,10 +341,186 @@ Columns in `Morex_Annotations_WithPhase.gff`:
 8. Frame: either 0 (first base of codon),1 (2nd base of codon) or 2
 9. Additional info about each feature
 
-Example GFF file
+Example GFF file:
 
 ```
+morex_contig_1083669    mips    predicted_gene  1       212     .       -       .       ID=MLOC_1000
+morex_contig_1083669    mips    mRNA    1       212     .       -       .       ID=MLOC_1000.1;Parent=MLOC_1000
+morex_contig_1083669    mips    exon    1       212     .       -       .       ID=MLOC_1000.1_exon_1;Parent=MLOC_1000.1
+morex_contig_1083669    mips    CDS     3       212     .       -       0       ID=MLOC_1000.1_cds_1;Parent=MLOC_1000.1
+morex_contig_1558214    mips    predicted_gene  4442    9055    .       -       .       ID=MLOC_10001
+morex_contig_1558214    mips    mRNA    4442    9055    .       -       .       ID=MLOC_10001.1;Parent=MLOC_10001
+morex_contig_1558214    mips    exon    4442    4563    .       -       .       ID=MLOC_10001.1_exon_1;Parent=MLOC_10001.1
+morex_contig_1558214    mips    exon    7038    7143    .       -       .       ID=MLOC_10001.1_exon_2;Parent=MLOC_10001.1
+morex_contig_1558214    mips    exon    7702    7832    .       -       .       ID=MLOC_10001.1_exon_3;Parent=MLOC_10001.1
+morex_contig_1558214    mips    CDS     4559    4563    .       -       2       ID=MLOC_10001.1_cds_1;Parent=MLOC_10001.1
+morex_contig_1558214    mips    CDS     7038    7143    .       -       0       ID=MLOC_10001.1_cds_2;Parent=MLOC_10001.1
+morex_contig_1558214    mips    CDS     7702    7832    .       -       2       ID=MLOC_10001.1_cds_3;Parent=MLOC_10001.1
+morex_contig_1558214    mips    mRNA    4870    9055    .       -       .       ID=MLOC_10001.2;Parent=MLOC_10001
+```
+
+***
+
+<!-- Exercises color scheme -->
+<!-- background: #063852 -->
+<!-- color: #F1F1F2-->
+<!-- font: metronova -->
+
+# Exercise 3.3: View BED Files
+
+Let's try viewing a bed file:
 
 ```
+#   Go back to the bds-files directory
+cd ..
+
+#   Run the same find command we've been using to find where the BED file is located
+find `pwd` -name "*.bed" | sort
+```
+
+Where are the .bed files located?
+
+***
+
+<!-- Exercises color scheme -->
+<!-- background: #063852 -->
+<!-- color: #F1F1F2-->
+<!-- font: metronova -->
+
+# Exercise 3.3: View BED Files
+
+We see the .bed files are located in chapters 6, 7, 8, 9 and 11. We'll use the .bed fild in `chapter-11-alignment` called `USH2A_exons.bed`.
+
+```
+#   First, go into that directory and find a file called 'USH2A_exons.bed'
+
+#   View the file using the 'less' command
+less USH2A_exons.bed
+```
+
+***
+
+<!-- background: #000100 -->
+<!-- color: #F1F1F2-->
+<!-- font: metronova -->
+
+# SAM/BAM Format
+
+Contains alignment information
+- Start/end coordinates
+- Mappling quality
+- Mates
+- And so on
+
+SAM: Plain text human readable format (cut, grep, sed, etc...)
+- Use [SAMTools view](http://www.htslib.org/doc/samtools.html) to view SAM files
+
+BAM: Binary(Compressed)
+
+***
+
+<!-- background: #000100 -->
+<!-- color: #F1F1F2-->
+<!-- font: metronova -->
+
+# BAM Format
+
+Order of magnitude smaller than SAM file
+
+Computer readable
+
+Here is what a BAM file looks like if you try to view it with `head` (not very useful to us):
+
+```
+?????#~x?˹??ծ?>?????*?i?q????zż?R???]s?O\??/S?I??h?g???i??.??j??P?*??ˣ??:??O\f?~?js?+_?]x?៸?yW??W?}??O^s?K???5*L?'?Y?????@??'??8?V???W?&?␇??~?Z??)?b©?~??=?m??8?A?w?\?;T?R?w??Y?o?:???+??4?OV???:?`??R??1CXpo?݈3??OX???Δb?/?<q???V\?pe?8???_?i
+                                         ????J??űG???o??f[?
+                                                           ?c2?ЬՉ
+                                                                 6?	s??>5??wI???~???33??8y??q!??u??D????4?
+                                                                                                              .?r?N?4;??C?(I?~2ﱗ?R??b<pn?+?/вr?|8,??s??#7
+                          ?Z???~?QS²?????;??m_
+ᆰ?;	.????}?7??
+                  ?BOKpV=L??`]??G??????)a?w????|?ca??r??.@cd??Bo?#
+                                                                  ????	t??_??0?Y?M&?[???ּI?h?e?
+nڪ ???aՖ
+F????_i3??_鈓?O*ѵS??B?4<2
+,?(`?)Φ???6'?\?m??P?.?]``nX???qa8?????-???_??UJ{El?W,??K`?F?
+?P&i\???>OzĬ+??e?x3?0?o}z>n?ȁ
+>?"x0y?%[?VD8?[#?^????"???8????}???#C?EXa??
+                                           ??:G?-?B???+??/L?X/??rZz@
+```
+
+To view BAM files, use `samtools view -u file_name.bam | head -n 20`:
+
+```
+?BC#???BAM?>?@SQ	SN:morex_contig_1	LN:340
+@SQ	SN:morex_contig_2	LN:456
+@SQ	SN:morex_contig_3	LN:387
+@SQ	SN:morex_contig_4	LN:1055
+@SQ	SN:morex_contig_5	LN:820
+@SQ	SN:morex_contig_6	LN:1875
+@SQ	SN:morex_contig_7	LN:2064
+@SQ	SN:morex_contig_8	LN:333
+@SQ	SN:morex_contig_9	LN:261
+@SQ	SN:morex_contig_10	LN:430
+@SQ	SN:morex_contig_11	LN:1259
+@SQ	SN:morex_contig_12	LN:1705
+@SQ	SN:morex_contig_13	LN:375
+@SQ	SN:morex_contig_14	LN:338
+@SQ	SN:morex_contig_15	LN:2057
+@SQ	SN:morex_contig_16	LN:302
+@SQ	SN:morex_contig_17	LN:554
+@SQ	SN:morex_contig_18	LN:258
+@SQ	SN:morex_contig_19	LN:2877
+@SQ	SN:morex_contig_20	LN:209
+```
+
+***
+
+<!-- background: #000100 -->
+<!-- color: #F1F1F2-->
+<!-- font: metronova -->
+
+# SAM Format
+
+`@SQ` header: stores info about the reference sequence
+
+`@RG` header: contains read group and sample metadata
+
+`@PG` header: metadata about programs used to create/process SAM/BAM files
+
+First line of alignment section – doesn’t begin with ‘@’
+
+Note: some programs need SAM files to have an @HD header at the beginning to work
+
+To view SAM file headers use `samtools view -H file_name.sam | head -n 10`:
+
+```
+@SQ	SN:I	LN:15072434
+@SQ	SN:II	LN:15279421
+@SQ	SN:III	LN:13783801
+@SQ	SN:IV	LN:17493829
+@SQ	SN:MtDNA	LN:13794
+@SQ	SN:V	LN:20924180
+@SQ	SN:X	LN:17718942
+@RG	ID:VB00023_L001	SM:celegans-01
+@PG	ID:bwa	PN:bwa	VN:0.7.10-r789	CL:bwa mem -R @RG\tID:VB00023_L001\tSM:celegans-01 Caenorhabditis_elegans.WBcel235.dna.toplevel.fa celegans-1.fq celegans-2.fq
+```
+
+To view SAM files, use `samtools view file_name.sam | head -n 10`:
+
+```
+X_10624440_10624943_0:0:0_2:0:0_3498	99	X	10624440	60	50M	=	10624894	504	ACGCCTATTCGCTAGTCAAACAATAACAACAGTTCCTGTCAGATAAATAG	22222222222222222222222222222222222222222222222222	NM:i:0	MD:Z:50	AS:i:5XS:i:0	RG:Z:VB00023_L001
+I_2839164_2839619_2:0:0_1:0:0_c72b	83	I	2839570	60	50M	=	2839164	-456	ATTGCTTTTCGAAAAACCTAAAGAATCATCAATCATCATGTTTCAAAAAA	22222222222222222222222222222222222222222222222222	NM:i:1	MD:Z:39T10	AS:i:45	XS:i:1RG:Z:VB00023_L001
+III_1100739_1101246_1:0:0_1:0:0_8c36	83	III	1101197	60	50M	=	1100739	-508	AGGCTTAAGCTTAGGCTCTGGGTTTCCCTGAGGCTTGGCGTCAGTGGCGA	22222222222222222222222222222222222222222222222222	NM:i:1	MD:Z:18A31	AS:i:45	XS:i:2RG:Z:VB00023_L001
+III_3499131_3499606_1:0:0_0:0:0_e378	99	III	3499131	60	50M	=	3499557	476	CTCTTTACAATTTTTTTTTGAGAAAAAGTGGGATTTTTCCGCTATTTTAA	22222222222222222222222222222222222222222222222222	NM:i:1	MD:Z:30C19	AS:i:45	XS:i:2RG:Z:VB00023_L001
+I_13215087_13215552_1:0:0_0:0:0_17033	99	I	13215087	60	50M	=	13215503	466	CTTCAACTCAGTCCCGAGACAAACTTCAATTTTGAGTTCTTTTTCTGAAG	22222222222222222222222222222222222222222222222222	NM:i:1	MD:Z:16T33	AS:i:45	XS:i:20	RG:Z:VB00023_L001
+II_12288502_12289038_1:0:0_0:0:0_1fa2	83	II	12288989	60	50M	=	12288502	-537	AGCCGCCATAACTTTTTTTTGAGAAGTTTGCAAGAGGTTTCATTATAAAA	22222222222222222222222222222222222222222222222222	NM:i:0	MD:Z:50	AS:i:5XS:i:36	RG:Z:VB00023_L001
+X_588991_589529_0:0:0_1:0:0_11ad9	83	X	589480	60	50M	=	588991	-539	TGGAGCAAGGTTATTAGATGAATTTAAATTTATTAAGTTTTCAGGTTTAA	22222222222222222222222222222222222222222222222222	NM:i:1	MD:Z:2T47	AS:i:47	XS:i:2RG:Z:VB00023_L001
+X_4515157_4515639_2:0:0_1:0:0_1228	99	X	4515157	60	50M	=	4515590	483	CAGCTCATCGAGCCGGGTGAAAATTGATCTACATGTTAAAAAGCATAAGG	22222222222222222222222222222222222222222222222222	NM:i:2	MD:Z:36G4T8	AS:i:40	XS:i:0RG:Z:VB00023_L001
+I_14715941_14716459_1:0:0_0:0:0_4553	147	I	14716410	60	50M	=	14715941	-519	GACCACCAAAATAACCAGTCACATATCAAATCTCTCTCAATCAATTACAA	22222222222222222222222222222222222222222222222222	NM:i:0	MD:Z:50	AS:i:5XS:i:0	RG:Z:VB00023_L001
+II_3921519_3922009_0:0:0_1:0:0_20013	163	II	3921519	60	50M	=	3921960	491	AAATTCTACCGTACTCCCAATTCAAAACTTTTAAATTTTTTTGATTAAAA	22222222222222222222222222222222222222222222222222	NM:i:0	MD:Z:50	AS:i:50	XS:i:19	RG:Z:VB00023_L001
+```
+
+***
 
 
