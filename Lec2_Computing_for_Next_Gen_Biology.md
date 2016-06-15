@@ -135,8 +135,8 @@ Command-line tool or GUI application
 
 # Git Vs. MS Word
 
-Git Track Changes        | MS Word Track Changes          
-:----------------------: | :-----------------------------:
+Git Track Changes               | MS Word Track Changes          
+:-----------------------------: | :-----------------------------:
 ![](https://github.com/liux1299/Linux-NGS_Tutorial/blob/master/images/Github_track_changes.png) | ![](https://github.com/liux1299/Linux-NGS_Tutorial/blob/master/images/ms%20word%20track%20changes.png)
 
 ***
