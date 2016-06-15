@@ -258,8 +258,7 @@ Once we find the command, we will change the `*.fasta` part to `*.fastq`
 
 ***
 
-<!-- Exercises color scheme -->
-<!-- background: #063852 -->
+<!-- background: #000100 -->
 <!-- color: #F1F1F2-->
 <!-- font: metronova -->
 
