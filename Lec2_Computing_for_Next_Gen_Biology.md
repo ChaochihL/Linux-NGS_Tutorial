@@ -523,4 +523,211 @@ II_3921519_3922009_0:0:0_1:0:0_20013	163	II	3921519	60	50M	=	3921960	491	AAATTCT
 
 ***
 
+<!-- Exercises color scheme -->
+<!-- background: #063852 -->
+<!-- color: #F1F1F2-->
+<!-- font: metronova -->
 
+# Exercise 3.4: View SAM/BAM Files
+
+Use the same `find` command we've been using to find where the `.sam` file is located:
+
+```
+find `pwd` -name "*.sam" | sort
+```
+
+We see the `.sam` files are located in `chapter-11-alignment`. Go into `chapter-11-alignment` and look for `.sam` file.
+
+```
+#   View head of SAM file celegans.sam with 'head' command
+head celegans.sam
+```
+
+Now try to view `celegans.bam` using the `head` command. This doesn't output information that is very useful to us. Try using `samtools view celegans.bam | head -n 10` to view the `.bam` file.
+
+*Note:* `.sam` and `.bam` files are typically relatively large in real datasets so using `less` command or opening `.sam`/`.bam` files in text editors takes too long.
+
+***
+
+<!-- background: #000100 -->
+<!-- color: #F1F1F2-->
+<!-- font: metronova -->
+
+# VCF/BCF Files
+
+Describes mismatches from reference.
+
+Must be paired with reference sequence.
+
+Information includes:
+- Type (SNP, MNP, Indel...)
+- Chromosome (or contig)
+- Position
+- Quality, depth...
+
+***
+
+<!-- Exercises color scheme -->
+<!-- background: #063852 -->
+<!-- color: #F1F1F2-->
+<!-- font: metronova -->
+
+# Exercise 3.5: View VCF Files
+
+If you are not already in the directory, `cd` into the directory containing `.vcf` file.
+
+Since the file extension is `.gz`, we will have to unzip the file first. To unzip the gzipped file use `zcat` command (If using a local Mac, use `gzcat` instead) then pipe to `head` to view beginning of file.
+
+```
+zcat NA12891_CEU_sample.vcf.gz | head
+```
+
+Run the same command without piping to head and see what happens.
+
+***
+
+<!-- background: #000100 -->
+<!-- color: #F1F1F2-->
+<!-- font: metronova -->
+
+# Tools
+
+Aligners
+- [BWA](http://bio-bwa.sourceforge.net/): software package for mapping sequences against large reference genomes.
+- [Bowtie/Bowtie2](http://bowtie-bio.sourceforge.net/bowtie2/index.shtml): fast and memory efficient tool for aligning sequencing reads to long reference sequences.
+- [MOSAIK-aligner](https://code.google.com/archive/p/mosaik-aligner/): a reference-guided aligner for NGS technologies.
+
+SAM/BAM handlers
+- [SAMtools](http://samtools.sourceforge.net/): includes various utilities for sorting, merging, indexing and generating alignments in the SAM format.
+- [Picard](http://broadinstitute.github.io/picard/): provides command line tools for manipulating high-throughput sequencing data and file formats such as SAM/BAM/CRAM and VCF. 
+- [BamTools](https://github.com/pezmaster31/bamtools): toolkit for handling BAM files.
+
+Refining Assemblies
+- [GATK](https://www.broadinstitute.org/gatk/): toolkit for high-throughput sequencing data analysis.
+- [Picard](http://broadinstitute.github.io/picard/)
+- [SAMtools](http://samtools.sourceforge.net/)
+
+Some Analysis
+- SNP calling, [FreeBayes](https://github.com/ekg/freebayes)
+- Splice-aware mapping, [Tophat](https://ccb.jhu.edu/software/tophat/index.shtml)
+
+***
+
+<!-- background: #000100 -->
+<!-- color: #F1F1F2-->
+<!-- font: metronova -->
+
+# PacBio RS II
+Newer sequencing technology than NGS.
+
+Single Molecule, Real-Time (SMRT) DNA sequencing system.
+- High consensus accuracy
+- Long read lengths
+
+Ideal for:
+- *de novo* assembly
+- Characterization of genetic variation
+- Methylation analysis
+- Microbiology studies
+- And more...
+
+***
+
+<!-- Exercises color scheme -->
+<!-- background: #063852 -->
+<!-- color: #F1F1F2-->
+<!-- font: metronova -->
+
+# Exercise 3.6: More Useful Commands to Know
+
+Go into directory with `contam.fastq` file. We'll use the one from `chapter-10-sequence`.
+
+Now we'll copy `contam.fastq` from `chapter-10-sequence` to `~/Itasca` and rename the file. Use th `cp` command to copy. We will rename by specifying directory the file will be copied to and giving it a new name `contam1.fastq`
+
+```
+cp contam.fastq ~/Itasca/contam1.fastq
+```
+
+Next, go into `~/Itasca` to view the copied file.
+
+There is already an existing file `contam.fastq` that we used `wget` to download earlier. Let's see if there are any differences between the file we just copied and the original file. We will use `diff` command to compare differences between files. The format will be `diff -y file_1 file_2`
+
+```
+diff -y contam.fastq contam1.fastq
+```
+
+***
+
+<!-- Exercises color scheme -->
+<!-- background: #063852 -->
+<!-- color: #F1F1F2-->
+<!-- font: metronova -->
+
+# Exercise 3.6: More Useful Commands to Know
+
+Let's create differences and use `diff` again to compare the files. We will be using Vim as our text editor for today. To do this, type `vim` followed by the file you want to edit.
+
+```
+vim contam1.fastq
+```
+
+In Vim you won't be able to use your mouse to make changes. 
+- Type `:` to start entering command. 
+- Hit `i` to enter INSERT MODE to edit file
+
+We will delete lines 16-19, but first let's jump to line 16:
+
+```
+:16
+```
+
+Use `dd` to delete current line and repeat this 4 times.
+
+```
+dd
+```
+
+***
+
+<!-- Exercises color scheme -->
+<!-- background: #063852 -->
+<!-- color: #F1F1F2-->
+<!-- font: metronova -->
+
+# Exercise 3.6: More Useful Commands to Know
+
+If you accidentally delete too many lines, use the undo command to undo your last change.
+
+```
+:u
+```
+
+If you type `:u` again it will undo 2 changes before that and so on.
+
+Now let's redo our last undo. Use `CTRL+r` to redo last two changes. Now that we have made changes to our file, we will save and exit.
+- `:w` saves the file
+- `:q` exits out of Vim
+
+```
+:wq
+```
+
+Let's use `diff` again to see if there are any differences between `contam1.fastq` and `contam.fastq`.
+
+```
+diff -y contam.fastq contam1.fastq 
+```
+
+The `>` symbol denotes where the differences in the file are.
+
+***
+
+<!-- background: #000100 -->
+<!-- color: #F1F1F2-->
+<!-- font: metronova -->
+
+# Additional Resources
+
+Vince Buffalo's *Bioinformatics Data Skills* - Ch. 10 and 11
+
+Answer key to today's exercises can be viewed and downloaded from my [Gist repository](https://gist.github.com/liux1299/af6fffc5d96e8d44dc9b).
