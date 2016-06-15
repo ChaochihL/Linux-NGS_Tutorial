@@ -66,7 +66,7 @@ You will likely find yourself working in a UNIX-like environment (MSI runs Linux
 
 # General Workflow
 
-![General NGS Workflow](/Users/chaochihliu/Github/Linux-NGS_Tutorial/images/General_workflow.png "General NGS Workflow")
+![General NGS Workflow](/Users/chaochihliu/Github/Linux-NGS_Tutorial/images/General_workflow.jpg)
 
 Tools are given at the end of slides.
 
