@@ -78,7 +78,7 @@ Tools are given at the end of slides.
 
 # Mapping and Alignment
 
-insert image later
+![](https://github.com/liux1299/Linux-NGS_Tutorial/blob/master/images/Mapping_and_Alignment.png)
 
 This figure was from GATK Broad Institute.
 
@@ -105,7 +105,7 @@ Well-defined and easy to parse
 
 Four Fields
 
-insert image later
+![](https://github.com/liux1299/Linux-NGS_Tutorial/blob/master/images/FASTQ_File_Fields.png)
 
 - <font color="blue"> Name (description line) - starts with `@` </font>
 - <font color="green"> Sequence data </font>
@@ -169,7 +169,7 @@ An account is not necessary to view and download public repositories.
 
 # Vince Buffalo's *Bioinformatic Data Skills* Book
 
-Insert image later
+![](https://github.com/liux1299/Linux-NGS_Tutorial/blob/master/images/Screen%20Shot%20VBuffalo%20GitHub%20Page%202015-07-31.png)
 
 ***
 
@@ -269,7 +269,7 @@ This file format is used to store high-throughput sequencing data, reported with
 
 Four Fields
 
-insert image later
+![](https://github.com/liux1299/Linux-NGS_Tutorial/blob/master/images/FASTQ_File_Fields.png)
 
 - <font color="blue"> Name (description line) - starts with `@` </font>
 - <font color="green"> Sequence data </font>
