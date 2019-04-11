@@ -96,11 +96,9 @@ For the purposes of this tutorial we will only work from Macs, if you have quest
 
 ### Things to keep in mind throughout this tutorial
 
-Remember the UNIX/LINUX command  line is case sensitive!
+Remember the UNIX/LINUX command line is case sensitive!
 
 All commands in this manual are printed in gray code boxes.
-
-Commands given in <span style="color:red">red</span> are considered more important for beginners than commands given in <span style="background-color:#F1F1F2"><span style="color:black">black</span></span>.
 
 The hash (pound) sign `#` indicates the start of comments for commands.
 
@@ -133,6 +131,43 @@ wc --help   # short help on wc
 Online help: Google
 
 Go to [linuxconfig.org](https://linuxconfig.org/linux-commands) for universally available Linux commands with detailed examples and explanations.
+
+***
+
+<!-- background: #000100 -->
+<!-- color: #F1F1F2-->
+<!-- font: metronova -->
+
+#### Downloading Example Data
+
+To download files, you must have the url of the raw format of the file. Use the command `wget` to download the files. 
+
+You can download files by copying and pasting one url at a time
+
+```
+wget https://raw.githubusercontent.com/vsbuffalo/bds-files/master/chapter-07-unix-data-tools/contam.fastq
+```
+
+Let's download another file from a different url
+
+```
+wget https://raw.githubusercontent.com/vsbuffalo/bds-files/master/chapter-07-unix-data-tools/contaminated.fastq
+
+```
+
+Now we'll download multiple files from different links with `wget`.
+
+Each link must be separated by a space
+
+```
+wget https://raw.githubusercontent.com/vsbuffalo/bds-files/master/chapter-03-remedial-unix/tb1-protein.fasta https://raw.githubusercontent.com/vsbuffalo/bds-files/master/chapter-03-remedial-unix/tb1.fasta https://raw.githubusercontent.com/vsbuffalo/bds-files/master/chapter-03-remedial-unix/tga1-protein.fasta
+```
+
+To view file sizes, permissions, date, etc. line by line, use the `ls` command. `-l` means use long listing format and `-h` will print sizes of files in human readable format
+
+```
+ls -lh
+```
 
 ***
 
@@ -180,7 +215,7 @@ The tilde symbol `~` gets interpreted as the path to your home directory. This w
 echo ~      # view the full (complete) path of your home
 find ~      # list all your files (including everything in sub-directories)
 ls ~        # list the top level files of your home directory
-du -sh ~/*  # calculate the file sizes in your home directory
+du -sh ~    # calculate the file sizes in your home directory
 ```
 
 ***
@@ -231,6 +266,12 @@ Now we will remove the directory called `test` with the `rm` command
 rm -rf test/
 ```
 
+Move the files you downloaded earlier into the `GitHub` repository
+
+```
+mv ~/*.fast* ~/GitHub/
+```
+
 ***
 
 <!-- background: #000100 -->
@@ -263,7 +304,7 @@ Command line <-> **desktop** exchange:
 
 #### Anywhere in Command Line:
 
-The :arrow_up: and :arrow_down: arrows scroll through command history.
+The up and down arrow keys scroll through command history.
 
 Typing `history` will show all the commands you have used recently.
 
@@ -275,11 +316,15 @@ Typing the beginning of something followed by `TAB` will complete the program_pa
 
 #### Taking control over the cursor (the pointer on the command line):
 
-- :star: `Ctrl+a` takes cursor to the beginning of the command line
-- :star: `Ctrl+e` takes cursor to the end of the command line
+- `Ctrl+a` takes cursor to the beginning of the command line
+- `Ctrl+e` takes cursor to the end of the command line
 - `Ctrl+w` cuts the last word
 - `Ctrl+k` cuts to the end of the line
 - `Ctrl+y` paste content that was cut earlier (by `Ctrl+w` or `Ctrl+k`)
+- `Alt+left arrow` jumps one word back
+- `Alt+right arrow` jumps one word forward
+- `Ctrl+c` terminates current running programs
+- `exit` or `Ctrl+d` exits out of your shell
 
 #### When specifying file names:
 
@@ -298,8 +343,8 @@ Typing the beginning of something followed by `TAB` will complete the program_pa
 
 ```
 find -name "*pattern*"              # searches for *pattern* in and below current directory
-find /usr/local -name "*blast*"     # finds file names *blast* in specified directory
-find /usr/local -iname "*blast*"    # Same as above, but case insensitive
+find ~/GitHub -name "*fastq*"       # finds file named *fastq* in specified directory
+find ~/GitHub -iname "*FaSTq*"      # Same as above, but case insensitive
 ```
 
 #### Here are some additional useful arguments that would be good to know exist:
@@ -319,7 +364,7 @@ dpkg -l | grep mypattern        # find Debian packages and refine search with gr
 #### Example of a `find` command we will be using frequently later on today
 
 ```
-find `pwd` -name "filename" | sort
+find $(pwd) -name "filename" | sort
 ```
 
 ***
@@ -332,7 +377,7 @@ find `pwd` -name "filename" | sort
 
 #### Grep
 
-:star: `grep` searches **within files** whereas `find` searches **directories**
+`grep` searches **within files** whereas `find` searches **directories**
 
 ```
 grep pattern file           # provides lines in 'file' where pattern 'appears'
@@ -403,48 +448,9 @@ chown <user>:<group> <file or dir>  # changes user & group ownership
 #### Commands that will be used in the exercise:
 
 ```
-wget ftp://ftp.ncbi.nih...      # download file from web
-
 du -sh              # displays disk space usage of current directory
 du -sh *            # displays disk space usage of individual files/directories
 du -s * | sort -nr  # shows disk space used by different files/directories sorted by size
-```
-
-#### Exercise 1.2
-
-You should already be in the directory `GitHub` we created earlier. If not, use `cd` to go into the directory.
-
-```
-cd ~/GitHub
-```
-
-To download files to the `GitHub` directory, you must have the url of the raw format of the file. Use the command `wget` to download the files. 
-
-You can download files by copying and pasting one url at a time
-
-```
-wget https://raw.githubusercontent.com/vsbuffalo/bds-files/master/chapter-07-unix-data-tools/contam.fastq
-```
-
-Let's download another file from a different url
-
-```
-wget https://raw.githubusercontent.com/vsbuffalo/bds-files/master/chapter-07-unix-data-tools/contaminated.fastq
-
-```
-
-Now we'll download multiple files from different links with `wget`.
-
-Each link must be separated by a space
-
-```
-wget https://raw.githubusercontent.com/vsbuffalo/bds-files/master/chapter-03-remedial-unix/tb1-protein.fasta https://raw.githubusercontent.com/vsbuffalo/bds-files/master/chapter-03-remedial-unix/tb1.fasta https://raw.githubusercontent.com/vsbuffalo/bds-files/master/chapter-03-remedial-unix/tga1-protein.fasta
-```
-
-To view file sizes, permissions, date, etc. line by line, use the `ls` command. `-l` means use long listing format and `-h` will print sizes of files in human readable format
-
-```
-ls -lh
 ```
 
 ***
@@ -528,7 +534,7 @@ It is a way to chain commands together
 Example:
 
 ```
-find `pwd` -name "name_of_file" | sort
+find $(pwd) -name "name_of_file" | sort
 ```
 
 ***
@@ -555,6 +561,31 @@ WBDC_*          # matches all files taht start with WBDC_
 
 ***
 
+<!-- background: #000100 -->
+<!-- color: #F1F1F2-->
+<!-- font: metronova -->
+
+# Command Substitutions
+
+The process of using the output of one command as the argument for another.
+
+Example:
+
+```
+find $(pwd) -name "*.sam"
+```
+
+- `pwd` command outputs full path to the current working directory (**p**ath to **w**orking **d**irectory)
+- `find` command looks through `pwd` for filename(s) specified with double quotes
+
+Sometimes you will see older syntax for command substitution that looks like this:
+
+```
+find $(pwd) -name "*.sam"
+```
+
+***
+
 <!-- Exercises color scheme -->
 <!-- background: #063852 -->
 <!-- color: #F1F1F2-->
@@ -568,7 +599,7 @@ Make sure you are in the directory `~/GitHub` (this path may be different depend
 #   Use 'find' command to locate all .fasta files
 #   'pwd' means point working directory
 #   'sort' sorts text line by line in alphabetical order
-find `pwd` -name "*.fasta" | sort
+find $(pwd) -name "*.fasta" | sort
 ```
 
 Check how many files are listed:
@@ -578,7 +609,7 @@ Check how many files are listed:
 #   '-l' option searches line by line
 #   Use the up arrow to scroll through your history 
 #   so you don't have to re-type the entire command
-find `pwd` -name "*.fasta" | sort | wc -l
+find $(pwd) -name "*.fasta" | sort | wc -l
 ```
 
 There should be 3 files with .fasta in their name.
@@ -596,14 +627,14 @@ Again, make sure you are in the `~/GitHub` directory.
 
 ```
 #   Use the 'find' command to locate all .fasta and .fastq files
-find `pwd` -name "*.fast*" | sort
+find $(pwd) -name "*.fast*" | sort
 ```
 
 Check how many files were found:
 
 ```
 #   Use the 'wc' command to see how many files were found
-find `pwd` -name "*.fast*" | sort | wc -l
+find $(pwd) -name "*.fast*" | sort | wc -l
 ```
 There should be 5 files with either `.fasta` or `.fastq` in their filenames.
 
@@ -969,25 +1000,6 @@ tail contam.fastq
 <!-- color: #F1F1F2-->
 <!-- font: metronova -->
 
-# Other Important Commands
-
-Below are some keyboard shortcuts that will make it faster to navigate the command line:
-
-```
-Alt+left arrow      # jump one word back
-Alt+right arrow     # jump one word forward
-Ctrl+a              # jump to the beginning of the line
-Ctrl+e              # jump to the end of the line
-Ctrl+c              # terminate current running programs
-exit or Ctrl+d      # exit out of your shell
-```
-
-***
-
-<!-- background: #000100 -->
-<!-- color: #F1F1F2-->
-<!-- font: metronova -->
-
 # Loops
 
 A way of executing a command or a series of commands on multiple cases multiple times.
@@ -1010,6 +1022,12 @@ Fast
 <!-- font: metronova -->
 
 # Examples on for-loops from Thomas Girke
+
+Very simple loop to print the first line of all your .fasta files
+
+```
+for file in *.fasta; do head -1 $file; done
+```
 
 Renames many files `*.old` to `*.new`. To test things first, replace `do mv` with `do echo mv`.
 
@@ -1241,25 +1259,6 @@ Decompress zipped files:
 <!-- color: #F1F1F2-->
 <!-- font: metronova -->
 
-# Command Substitutions
-
-The process of using the output of one command as the argument for another.
-
-Example:
-
-```
-find `pwd` -name "*.sam"
-```
-
-- `pwd` command outputs full path to the current working directory (**p**ath to **w**orking **d**irectory)
-- `find` command looks through `pwd` for filename(s) specified with double quotes
-
-***
-
-<!-- background: #000100 -->
-<!-- color: #F1F1F2-->
-<!-- font: metronova -->
-
 # PATH
 
 List of directories that the shell will search when you type a command.
@@ -1285,7 +1284,7 @@ export PATH=$PATH:<path to directory>   # You can edit PATH variable
 ```
 #   In the directory ~/GitHub
 #   Use 'find' command to locate all '.fasta' and '.fq' filenames
-find `pwd` -name "*.f*" | sort
+find $(pwd) -name "*.f*" | sort
 ```
 
 There should be 3 files with either `.fasta` or `.fq` filenames. Check by piping `find` command to a word count command.
@@ -1293,7 +1292,7 @@ There should be 3 files with either `.fasta` or `.fq` filenames. Check by piping
 ```
 #   'wc' prints word, newline and byte counts
 #   The '-l' option means print the newline counts
-find `pwd` -name "*.f*" | sort | wc -l
+find $(pwd) -name "*.f*" | sort | wc -l
 ```
 
 Now use `ls` command to view the files you downloaded to the directory you are in. You should see a total of 3 files with .fasta in the filename
